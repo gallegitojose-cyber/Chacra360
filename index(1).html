@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#176b3a">
+<title>CHACRA 360 | Servicios agrícolas</title>
+<style>
+:root{--green:#176b3a;--green2:#21864b;--light:#eef7ef;--ink:#183126;--muted:#627268;--line:#dce8de;--white:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f5f8f5;color:var(--ink);line-height:1.5}
+header{background:linear-gradient(135deg,#10552e,#25894c);color:white;padding:24px 16px 34px}
+.wrap{max-width:1050px;margin:auto;padding:0 16px}
+nav{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:1.35rem;letter-spacing:.4px}.brand span{font-size:1.5rem}
+nav a{color:white;text-decoration:none;font-weight:700;margin-left:14px;font-size:.95rem}
+.hero{padding:36px 0 12px;max-width:720px}.hero h1{font-size:clamp(2rem,6vw,3.1rem);line-height:1.08;margin:0 0 12px}.hero p{font-size:1.1rem;margin:0;color:#e8f5eb}
+main{padding:22px 0 50px}.notice{background:#fff8df;border:1px solid #f0dfa0;padding:12px 14px;border-radius:12px;color:#66521a;font-size:.92rem;margin:0 0 20px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.card{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 5px 18px #173d2410}
+.card h2{margin:0 0 5px;font-size:1.3rem}.sub{margin:0 0 16px;color:var(--muted);font-size:.94rem}
+label{display:block;font-weight:700;font-size:.9rem;margin:12px 0 5px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #cbd9ce;border-radius:10px;font:inherit;background:white;color:var(--ink)}
+textarea{min-height:88px;resize:vertical}
+button,.button{border:0;border-radius:10px;background:var(--green);color:white;padding:12px 17px;font-size:1rem;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
+button:hover,.button:hover{background:#10552e}.secondary{background:#e8f3ea;color:var(--green)}.secondary:hover{background:#d9ebdd;color:#10552e}
+form button{width:100%;margin-top:16px}
+.searchbar{display:grid;grid-template-columns:1fr 210px;gap:10px;margin:16px 0}
+.jobs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.job{background:white;border:1px solid var(--line);border-radius:14px;padding:16px}
+.job h3{margin:0 0 6px}.tag{display:inline-block;background:var(--light);color:var(--green);padding:4px 9px;border-radius:99px;font-size:.8rem;font-weight:700}
+.job p{margin:7px 0;color:#405349}.job a{margin-top:8px}
+.empty{background:white;border:1px dashed #b9cdbd;border-radius:14px;padding:22px;text-align:center;color:var(--muted);grid-column:1/-1}
+.section-title{margin:30px 0 12px}.section-title h2{margin:0}.section-title p{margin:4px 0;color:var(--muted)}
+footer{text-align:center;padding:24px 16px;background:#eaf2eb;color:#506257;font-size:.9rem}
+@media(max-width:720px){.grid,.jobs{grid-template-columns:1fr}.searchbar{grid-template-columns:1fr}nav a{margin-left:8px}.card{padding:17px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap">
+  <nav><div class="brand"><span>🌱</span> CHACRA 360</div><div><a href="#publicar">Publicar trabajo</a><a href="#buscar">Buscar trabajo</a></div></nav>
+  <div class="hero"><h1>Servicios agrícolas, en un solo lugar</h1><p>Conectamos productores, trabajadores y proveedores agrícolas para que las tareas del campo encuentren a las personas indicadas.</p></div>
+ </div>
+</header>
+<main class="wrap">
+ <div class="notice"><strong>Versión inicial:</strong> las publicaciones se guardan en este navegador y dispositivo. Para que todos los usuarios vean las mismas ofertas desde sus celulares, luego habrá que conectar una base de datos online.</div>
+ <div class="grid">
+  <section class="card" id="publicar">
+   <h2>🚜 Publicar un trabajo</h2><p class="sub">Cargá una tarea para que trabajadores y prestadores puedan contactarte.</p>
+   <form id="jobForm">
+    <label for="producer">Nombre del productor</label><input id="producer" required placeholder="Tu nombre">
+    <label for="location">Ubicación de la chacra</label><input id="location" required placeholder="Ej. Centenario, Neuquén">
+    <label for="task">Trabajo solicitado</label><select id="task" required><option value="">Seleccionar tarea</option><option>Cosecha</option><option>Poda</option><option>Riego</option><option>Limpieza de chacra</option><option>Tractor y maquinaria</option><option>Siembra</option><option>Mantenimiento</option><option>Otro</option></select>
+    <label for="details">Detalles del trabajo</label><textarea id="details" placeholder="Contá qué trabajo necesitás, fechas y condiciones"></textarea>
+    <label for="phone">Teléfono de contacto (con código de área)</label><input id="phone" type="tel" required placeholder="Ej. 2991234567">
+    <button type="submit">Publicar oferta</button>
+   </form>
+  </section>
+  <section class="card">
+   <h2>👩‍🌾 Registrarme</h2><p class="sub">Dejá tus datos para que puedan encontrarte.</p>
+   <form id="peopleForm">
+    <label for="personName">Nombre</label><input id="personName" required placeholder="Tu nombre">
+    <label for="profile">Quiero registrarme como</label><select id="profile" required><option value="">Seleccionar perfil</option><option>Productor</option><option>Trabajador rural</option><option>Proveedor de servicios</option><option>Maquinista</option></select>
+    <label for="personLocation">Localidad</label><input id="personLocation" required placeholder="Ej. Centenario">
+    <label for="personPhone">Teléfono</label><input id="personPhone" type="tel" required placeholder="Tu teléfono">
+    <button type="submit">Registrarme</button>
+   </form>
+   <p id="registerMsg" role="status" aria-live="polite"></p>
+  </section>
+ </div>
+ <section id="buscar">
+  <div class="section-title"><h2>🔎 Buscar trabajo</h2><p>Explorá las ofertas publicadas en este dispositivo.</p></div>
+  <div class="searchbar"><input id="searchText" placeholder="Buscar por tarea o localidad..."><select id="filterTask"><option value="">Todas las tareas</option><option>Cosecha</option><option>Poda</option><option>Riego</option><option>Limpieza de chacra</option><option>Tractor y maquinaria</option><option>Siembra</option><option>Mantenimiento</option><option>Otro</option></select></div>
+  <div id="jobs" class="jobs"><div class="empty">Todavía no hay ofertas. ¡Publicá la primera!</div></div>
+ </section>
+</main>
+<footer>🌱 CHACRA 360 · Plataforma de servicios agrícolas</footer>
+<script>
+const KEY='chacra360_jobs_v1';
+const readJobs=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return []}};
+const saveJobs=items=>localStorage.setItem(KEY,JSON.stringify(items));
+const cleanPhone=p=>p.replace(/[^0-9+]/g,'');
+function renderJobs(){
+ const q=document.getElementById('searchText').value.trim().toLowerCase();
+ const f=document.getElementById('filterTask').value;
+ const found=readJobs().filter(j=>(!q||(j.task+' '+j.location+' '+j.producer+' '+j.details).toLowerCase().includes(q))&&(!f||j.task===f));
+ const box=document.getElementById('jobs');box.innerHTML='';
+ if(!found.length){box.innerHTML='<div class="empty">No hay ofertas que coincidan con la búsqueda.</div>';return}
+ found.slice().reverse().forEach(j=>{
+  const el=document.createElement('article');el.className='job';
+  const title=document.createElement('h3');title.textContent=j.task;
+  const tag=document.createElement('span');tag.className='tag';tag.textContent=j.location;
+  const producer=document.createElement('p');producer.textContent='Productor: '+j.producer;
+  const details=document.createElement('p');details.textContent=j.details||'Sin detalles adicionales.';
+  const link=document.createElement('a');link.className='button';link.target='_blank';link.rel='noopener';link.href='https://wa.me/'+cleanPhone(j.phone);link.textContent='Contactar por WhatsApp';
+  el.append(title,tag,producer,details,link);box.appendChild(el);
+ });
+}
+document.getElementById('jobForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const j={producer:document.getElementById('producer').value.trim(),location:document.getElementById('location').value.trim(),task:document.getElementById('task').value,details:document.getElementById('details').value.trim(),phone:document.getElementById('phone').value.trim(),created:Date.now()};
+ const all=readJobs();all.push(j);
+ try{saveJobs(all);e.target.reset();renderJobs();alert('¡Oferta publicada en este dispositivo!');}
+ catch(err){alert('No se pudo guardar la oferta en este navegador.');}
+});
+document.getElementById('peopleForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ document.getElementById('registerMsg').textContent='¡Gracias por registrarte! Esta versión inicial no envía los datos a un servidor. Contactá al administrador para completar el registro.';
+ e.target.reset();
+});
+document.getElementById('searchText').addEventListener('input',renderJobs);
+document.getElementById('filterTask').addEventListener('change',renderJobs);
+renderJobs();
+</script>
+</body>
+</html>
