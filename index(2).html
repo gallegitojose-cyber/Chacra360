@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#176b3a">
+<title>CHACRA 360 | Servicios agrícolas</title>
+<style>
+:root{--green:#176b3a;--green2:#21864b;--light:#eef7ef;--ink:#183126}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f7f3;color:var(--ink)}
+header{background:var(--green);color:white;padding:26px 16px;text-align:center}
+header h1{margin:0;font-size:30px} header p{margin:9px 0 0}
+nav{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;background:white;padding:13px}
+button{background:var(--green);color:white;border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:pointer}
+nav button{background:#e5f1e7;color:var(--green)}
+main{max-width:850px;margin:20px auto;padding:0 14px}
+.card{background:white;padding:20px;border-radius:13px;margin-bottom:18px;box-shadow:0 2px 9px #00000010}
+h2{color:var(--green);margin-top:0}
+input,select,textarea{width:100%;padding:13px;margin:7px 0 13px;border:1px solid #ccd8ce;border-radius:8px;font-size:16px}
+label{font-weight:bold;font-size:14px}.hidden{display:none}
+.offer{border:1px solid #dce9dd;padding:15px;border-radius:10px;margin:12px 0}
+.offer h3{margin:0 0 8px;color:var(--green)}.offer p{margin:6px 0}
+footer{text-align:center;padding:25px;background:#183126;color:white;margin-top:30px}
+.small{font-size:13px;color:#66756a}
+</style>
+</head>
+<body>
+<header>
+<h1>🌱 CHACRA 360</h1>
+<p>La plataforma de servicios agrícolas</p>
+<p>Conectamos productores, trabajadores y proveedores.</p>
+</header>
+<nav>
+<button onclick="showSection('publicar')">Publicar trabajo</button>
+<button onclick="showSection('buscar')">Buscar trabajo</button>
+<button onclick="showSection('registro')">Registrarme</button>
+<button onclick="showSection('ofertas')">Ver ofertas</button>
+</nav>
+<main>
+<section id="publicar" class="card">
+<h2>🚜 Publicar una oferta de trabajo</h2>
+<form id="formOferta">
+<label for="productor">Nombre del productor</label><input id="productor" required placeholder="Tu nombre">
+<label for="ubicacion">Ubicación de la chacra</label><input id="ubicacion" required placeholder="Ej. Centenario">
+<label for="tarea">Trabajo solicitado</label>
+<select id="tarea" required><option value="">Seleccionar tarea</option><option>Cosecha</option><option>Poda</option><option>Riego</option><option>Desmalezado</option><option>Tractor y maquinaria</option><option>Preparación de suelo</option><option>Otros trabajos</option></select>
+<label for="descripcion">Descripción del trabajo</label><textarea id="descripcion" placeholder="Detalles del trabajo"></textarea>
+<label for="telefono">Teléfono de contacto</label><input id="telefono" required type="tel" placeholder="Código de área y número">
+<button type="submit">Publicar oferta</button>
+</form>
+</section>
+<section id="buscar" class="card hidden">
+<h2>🔎 Buscar trabajo agrícola</h2>
+<input id="filtro" placeholder="Buscar por tarea o ubicación..." oninput="renderOffers()">
+<div id="resultados"></div>
+</section>
+<section id="registro" class="card hidden">
+<h2>👨‍🌾 Registro de trabajadores</h2>
+<form id="formRegistro">
+<label for="nombreTrabajador">Nombre completo</label><input id="nombreTrabajador" required>
+<label for="telefonoTrabajador">Teléfono</label><input id="telefonoTrabajador" required type="tel">
+<label for="localidadTrabajador">Localidad</label><input id="localidadTrabajador" required>
+<label for="especialidad">Trabajo que sabés realizar</label>
+<select id="especialidad" required><option value="">Seleccionar</option><option>Cosecha</option><option>Poda</option><option>Riego</option><option>Desmalezado</option><option>Maquinaria agrícola</option><option>Otros</option></select>
+<button type="submit">Registrarme</button>
+</form>
+</section>
+<section id="ofertas" class="card hidden"><h2>📋 Ofertas de trabajo disponibles</h2><div id="listaOfertas"></div></section>
+<section class="card"><h2>🌾 CHACRA 360</h2><p>Una plataforma para impulsar el trabajo rural, conectar productores con trabajadores y facilitar los servicios agrícolas.</p><p class="small">Proyecto en desarrollo.</p></section>
+</main>
+<footer><strong>CHACRA 360</strong><p>Conectando el campo con nuevas oportunidades.</p></footer>
+<script>
+const $=id=>document.getElementById(id);
+function showSection(id){document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));$(id).classList.remove('hidden');if(id==='ofertas'||id==='buscar')renderOffers();}
+function getOffers(){try{return JSON.parse(localStorage.getItem('chacra360_ofertas')||'[]')}catch(e){return []}}
+function escapeHTML(v){return String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function renderOffers(){
+ const q=($('filtro')?.value||'').toLowerCase();
+ const html=getOffers().filter(o=>(o.tarea+' '+o.ubicacion+' '+o.descripcion).toLowerCase().includes(q)).map(o=>{
+ const phone=String(o.telefono||'').replace(/\D/g,'');
+ return `<article class="offer"><h3>${escapeHTML(o.tarea)}</h3><p><b>Productor:</b> ${escapeHTML(o.productor)}</p><p><b>Ubicación:</b> ${escapeHTML(o.ubicacion)}</p><p>${escapeHTML(o.descripcion)}</p><p><b>Contacto:</b> ${escapeHTML(o.telefono)}</p><a href="https://wa.me/${phone}?text=${encodeURIComponent('Hola, vi tu oferta en CHACRA 360 y estoy interesado/a.')}" target="_blank" rel="noopener"><button type="button">Contactar por WhatsApp</button></a></article>`;
+ }).join('')||'<p>Todavía no hay ofertas publicadas.</p>';
+ $('listaOfertas').innerHTML=html;$('resultados').innerHTML=html;
+}
+$('formOferta').addEventListener('submit',e=>{
+ e.preventDefault();const offers=getOffers();
+ offers.unshift({productor:$('productor').value,ubicacion:$('ubicacion').value,tarea:$('tarea').value,descripcion:$('descripcion').value,telefono:$('telefono').value});
+ localStorage.setItem('chacra360_ofertas',JSON.stringify(offers));e.target.reset();alert('¡Oferta publicada en este dispositivo!');showSection('ofertas');
+});
+$('formRegistro').addEventListener('submit',e=>{
+ e.preventDefault();let people=[];try{people=JSON.parse(localStorage.getItem('chacra360_trabajadores')||'[]')}catch(err){}
+ people.push({nombre:$('nombreTrabajador').value,telefono:$('telefonoTrabajador').value,localidad:$('localidadTrabajador').value,especialidad:$('especialidad').value});
+ localStorage.setItem('chacra360_trabajadores',JSON.stringify(people));e.target.reset();alert('¡Registro guardado en este dispositivo!');
+});
+</script>
+</body>
+</html>
